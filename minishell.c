@@ -6,7 +6,7 @@
 /*   By: szeftyr <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:57:39 by szeftyr           #+#    #+#             */
-/*   Updated: 2020/11/04 17:01:28 by szeftyr          ###   ########.fr       */
+/*   Updated: 2020/11/04 20:46:28 by szeftyr          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	run_exec(char *command, char **param, char **newenv)
 	char	*path_var;
 
 	path_var = get_env_var_val(newenv, "PATH");
-	if (path_var == NULL)
+	if (path_var == NULL && param[0][0] != '/')
 	{
 		ft_putstr("Command not found\n");
 		return ;
