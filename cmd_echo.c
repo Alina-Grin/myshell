@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: szeftyr <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: szeftyr <szeftyr@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 14:00:36 by szeftyr           #+#    #+#             */
-/*   Updated: 2020/11/04 19:07:30 by szeftyr          ###   ########.fr       */
+/*   Updated: 2020/11/05 14:25:37 by szeftyr          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,6 @@ static void	nonprint_esc(char *str)
 	}
 }
 
-// char		*change_tmp(char *tmp, char **newenv)
-// {
-// 	int		i;
-// 	char	*value;
-// 	int		pos;
-// 	char	*key;
-// 	int		len;
-
-// 	pos = 0;
-// 	while (tmp[pos] != '$')
-// 		pos++;
-// 	i = pos + 1;
-// 	while (tmp[i] != ' ' && tmp[i] != '\t' && tmp[i] != 39 && tmp[i] != 34 && tmp[i] != '$')
-// 		i++;
-// 	key = ft_strsub(tmp, (pos + 1), (i - pos - 1));
-// 	if (!(value = get_env_var_val(newenv, key)))
-// 		value = ft_strdup("");
-// 	free(key);
-// 	len = ft_strlen(tmp) - i;
-// 	key = ft_strnew(pos + ft_strlen(value) + len);
-// 	key = ft_strncpy(key, tmp, pos);
-// 	key = ft_strcat(key, value);
-// 	key = ft_strcat(key, (tmp + i));
-// 	free(value);
-// 	free(tmp);
-// 	return (key);
-// }
-
 void		print_echo(char *tmp, char *str, int *i, char **newenv)
 {
 	if (tmp[0] == '~')
@@ -63,13 +35,16 @@ void		print_echo(char *tmp, char *str, int *i, char **newenv)
 		free(tmp);
 		tmp = get_env_var_val(newenv, "HOME");
 	}
-	// if (ft_strchr(tmp, '$'))
-	// 	tmp = change_tmp(tmp, newenv);
 	nonprint_esc(tmp);
 	(*i)++;
-	free(tmp);
+	if (ft_strlen(tmp) == 1 && (tmp[0] == 34 || tmp[0] == 39))
+	{
+		free(tmp);
+		return ;
+	}
 	if (str)
 		ft_putchar(' ');
+	free(tmp);
 }
 
 int			cmd_echo(char **str, char **newenv)
@@ -82,7 +57,7 @@ int			cmd_echo(char **str, char **newenv)
 	i = 1;
 	while (str[i])
 	{
-		tmp = ft_strtrim(str[i]);
+		tmp = ft_strdup(str[i]);
 		if (tmp[0] != '$' || (tmp[0] == '$' && tmp[1] == '\0'))
 			print_echo(tmp, str[i], &i, newenv);
 		else if (tmp[0] == '$' && tmp[1] != '\0')

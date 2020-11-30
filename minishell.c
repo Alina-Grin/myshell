@@ -6,7 +6,7 @@
 /*   By: szeftyr <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:57:39 by szeftyr           #+#    #+#             */
-/*   Updated: 2020/11/04 20:46:28 by szeftyr          ###   ########.fr       */
+/*   Updated: 2020/11/04 23:48:50 by szeftyr          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ int		execve_cmd(char *path, char **param, char **env)
 		if (execve(path, param, env) == -1)
 		{
 			ft_putstr("Command not found\n");
-			exit(1);
+			free(path);
+			ft_freearray((void **)param);
+			exit(0);
 		}
-		free(param);
+		ft_freearray((void **)param);
 	}
 	else if (pid < 0)
 	{
@@ -89,7 +91,10 @@ void	run_exec(char *command, char **param, char **newenv)
 		return ;
 	}
 	if (param[0][0] == '/')
+	{
+		free(path_var);
 		execve_cmd(command, param, newenv);
+	}
 	else
 	{
 		cmdpath = check_paths(param, path_var);

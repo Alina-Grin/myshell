@@ -1,8 +1,21 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: szeftyr <szeftyr@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/11/05 11:46:54 by szeftyr           #+#    #+#              #
+#    Updated: 2020/11/05 11:46:54 by szeftyr          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS = minishell.c
+SRCS = minishell.c parse_input.c path.c signal.c ft_split.c cmd_setting_env.c \
+		cmd_env.c cmd_echo.c cmd_cd.c
 
 DIR = libft/libft.a
 
